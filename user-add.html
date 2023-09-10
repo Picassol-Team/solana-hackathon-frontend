@@ -64,7 +64,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="project-add.html" class="nav-link active">
+            <a href="project-add.html" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Project Add</p>
             </a>
@@ -76,7 +76,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="user-add.html" class="nav-link">
+            <a href="user-add.html" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
               <p>User Add</p>
             </a>
@@ -100,7 +100,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Project Add</li>
+              <li class="breadcrumb-item active">User Add</li>
             </ol>
           </div>
         </div>
@@ -123,12 +123,17 @@
             </div>
             <div class="card-body">
               <div class="form-group">
-                <label for="inputName">Project Name</label>
-                <input type="text" id="inputName" name="name" class="form-control">
+                <label for="inputName">Address</label>
+                <input type="text" id="inputName" name="address" class="form-control">
               </div>
               <div class="form-group">
-                <label for="inputDescription">Project Description</label>
-                <textarea id="inputDescription" class="form-control" name="description" rows="4"></textarea>
+                <label for="inputStatus">Role</label>
+                <select id="inputStatus" name="role" class="form-control custom-select">
+                  <option value="CompanyManager">CompanyManager</option>
+                  <option value="ProjectManager">ProjectManager</option>
+                  <option value="Developer">Developer</option>
+                  <option value="Tester">Tester</option>
+                </select>
               </div>
             </div>
             <!-- /.card-body -->
@@ -166,21 +171,19 @@
 
     $('#submitButton').click(function(){
 
-      var txtName = document.getElementsByName('name')[0].value;
-      var txtDescription = document.getElementsByName('description')[0].value;
+      var txtAddress = document.getElementsByName('address')[0].value;
+      var txtRole = document.getElementsByName('role')[0].value;
 
       var settings = {
-        "url": "https://picassol-d0bba630b8ff.herokuapp.com/project",
+        "url": "https://picassol-d0bba630b8ff.herokuapp.com/auth/createUser",
         "method": "POST",
         "timeout": 0,
         "headers": {
           "Content-Type": "application/json"
         },
         "data": JSON.stringify({
-          "title": txtName,
-          "description": txtDescription,
-          "projectOwnerAddress": "91d4z5F3hFatUuj3Ae8sRa8Fsi17e9NSsNLXvSXzuSPq",
-          "status": "InProgress"
+          "address": txtAddress,
+          "role": txtRole
         }),
       };
 
