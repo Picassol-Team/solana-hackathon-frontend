@@ -146,105 +146,70 @@
 <!-- overlayScrollbars -->
 <script src="./plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <!-- AdminLTE App -->
-<script src="./js/adminlte.min.js"></script>
+<script src="./dist/js/adminlte.min.js"></script>
 <!-- Filterizr-->
 <script src="./plugins/filterizr/jquery.filterizr.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 
 <script>
   $(async  function () {
-    const tasks = [
-  {
-    id:'#124124',
-    type:1,
-    title: 'Update Homepage CSS',
-    description: 'Improve the styling and layout of the homepage by updating the CSS to make it more visually appealing and responsive.',
-  },
-  {
-    id:'#1424124',
-    type:1,
-    title: 'Implement User Profile Page',
-    description: 'Create a user profile page that displays user information and allows users to edit their profile details.',
-  },
-  {
-    id:'#524424',
-    type:2,
-    title: 'Add Validation to Signup Form',
-    description: 'Implement client-side validation for the signup form to ensure that user inputs are valid before submitting the form.',
-  },
-  {
-    id:'#353124',
-    type:2,
-    title: 'Create Product Card Component',
-    description: 'Build a reusable product card component for displaying product details with an image, title, and price.',
-  },
-  {
-    id:'#5566124',
-    type:3,
-  title: 'Set Up Database Schema',
-  description: 'Define and create the database schema for storing user accounts and product information.',
-},
-{
-  id:'#35124',
-  type:3,
-  title: 'Implement User Authentication',
-  description: 'Develop user authentication functionality using JWT tokens or OAuth to secure user access to protected routes.',
-},
-{
-  id:'#9924124',
-  type:2,
-  title: 'Create API Endpoint for Product Listing',
-  description: 'Build an API endpoint that retrieves a list of products from the database and returns them in a JSON format.',
-},
-{
-  id:'#37824124',
-  type:3,
-  title: 'Implement User Password Reset',
-  description: 'Develop a feature that allows users to reset their password by sending a password reset link to their email.',
-},
-];
-    var ul = document.createElement("ul");
-    var inProgressDiv = document.getElementById("in-progress");
-    var doneDiv = document.getElementById("done");
-    var todoDiv = document.getElementById("todo");
+  // Define the API endpoint URL
+  const apiUrl = 'https://picassol-d0bba630b8ff.herokuapp.com/task/getByProjectId/64fd8fd0a935d7f646a5732b'; // Replace with your API URL
+  // Use jQuery to make an AJAX request to the API
+  $.ajax({
+    url: apiUrl,
+    method: 'GET',
+    headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    dataType: 'json', // Specify the expected data type (JSON in this case)
+    success: function (data) {
+    if (Array.isArray(data)) {
+      var ul = document.createElement("ul");
+      var inProgressDiv = document.getElementById("in-progress");
+      var doneDiv = document.getElementById("done");
+      var todoDiv = document.getElementById("todo");
 
-    tasks.forEach(function (task) {
-      // Create a div element to hold the provided HTML content
-      var divToAppend = document.createElement("div");
-      divToAppend.className = "card-body";
-      divToAppend.innerHTML = `
-        <div class="card card-light card-outline">
-          <div class="card-header">
-            <h5 class="card-title">${task.title}</h5>
-            <div class="card-tools">
-              <a href="project-edit.html?taskId=${task.id}" class="btn btn-tool btn-link">${task.id}</a>
-              <a href="#" class="btn btn-tool">
-                <i class="fas fa-pen"></i>
-              </a>
+      data.forEach(function (task) {
+        // Create a div element to hold the provided HTML content
+        var divToAppend = document.createElement("div");
+        divToAppend.className = "card-body";
+        divToAppend.innerHTML = `
+          <div class="card card-light card-outline">
+            <div class="card-header">
+              <h5 class="card-title">${task.title}</h5>
+              <div class="card-tools">
+                <a href="project-edit.html?taskId=${task.id}" class="btn btn-tool btn-link">${task._id}</a>
+                <a href="#" class="btn btn-tool">
+                  <i class="fas fa-pen"></i>
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+              <p>
+              ${task.description}
+              </p>
+              <span class="badge badge-success">Backend</span>
+              <span class="badge badge-error">Dev-Ops</span>
+              <span class="badge badge-primary">Frontend</span>
             </div>
           </div>
-          <div class="card-body">
-            <p>
-            ${task.description}
-            </p>
-            <span class="badge badge-success">Backend</span>
-            <span class="badge badge-error">Dev-Ops</span>
-            <span class="badge badge-primary">Frontend</span>
-          </div>
-        </div>
-      `;
-      if(task.type == 1){
-        inProgressDiv.appendChild(divToAppend);
-      }
-      else if(task.type == 3){
-        todoDiv.appendChild(divToAppend);
-      }
-      else if(task.type == 2){
-        doneDiv.appendChild(divToAppend);
-      }
+        `;
+        if(task.status == 'InProgress'){
+          inProgressDiv.appendChild(divToAppend);
+        }
+        else if(task.status == 'Todo'){
+          todoDiv.appendChild(divToAppend);
+        }
+        else if(task.status == 'Done'){
+          doneDiv.appendChild(divToAppend);
+        }
 
-    });
-  })
+      });
+  }
+  }
+})
+});
 </script>
 </body>
 </html>

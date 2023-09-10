@@ -126,91 +126,28 @@
         <div class="card-body p-0">
           <table id="data-table" class="table table-striped projects">
               <thead>
-                  <tr>
-                      <th style="width: 1%">
-                          #
-                      </th>
-                      <th style="width: 20%">
-                          Project Name
-                      </th>
-                      <th style="width: 30%">
-                        Project Owner
-                      </th>
-                      <th>
-                          Total Tasks
-                      </th>
-                      <th style="width: 8%" class="text-center">
-                          Status
-                      </th>
-                      <th style="width: 20%">
-                      </th>
-                  </tr>
+                <tr>
+                    <th style="width: 1%">
+                        #
+                    </th>
+                    <th style="width: 20%">
+                        Project Name
+                    </th>
+                    <th style="width: 30%">
+                      Project Owner
+                    </th>
+                    <th>
+                        Created Date
+                    </th>
+                    <th style="width: 8%">
+                        Status
+                    </th>
+                    <th style="width: 20%">
+
+                    </th>
+                </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>
-                          #
-                      </td>
-                      <td>
-                          <a>
-                              BioTech Innovate
-                          </a>
-                          <br/>
-                          <small>
-                              Created 01.01.2019
-                          </small>
-                      </td>
-                      <td class="project_progress">
-                          <p>
-                              91d4z5F3hFatUuj3Ae8sRa8Fsi17e9NSsNLXvSXzuSPq
-                          </p>
-                      </td>
-                      <td class="project_progress">
-                          <p>
-                              22
-                          </p>
-                      </td>
-                      <td class="project-state">
-                          <span class="badge badge-success">Active</span>
-                      </td>
-                      <td class="project-actions text-center">
-                          <a class="btn btn-primary btn-sm" href="#">
-                              Go to Board
-                          </a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          #
-                      </td>
-                      <td>
-                          <a>
-                              Heroku
-                          </a>
-                          <br/>
-                          <small>
-                              Created 01.01.2019
-                          </small>
-                      </td>
-                      <td class="project_progress">
-                          <p>
-                              91d4z5F3hFatUuj3Ae8sRa8Fsi17e9NSsNLXvSXzuSPq
-                          </p>
-                      </td>
-                      <td class="project_progress">
-                          <p>
-                              22
-                          </p>
-                      </td>
-                      <td class="project-state">
-                          <span class="badge badge-success">Success</span>
-                      </td>
-                      <td class="project-actions text-center">
-                          <a class="btn btn-primary btn-sm" href="#">
-                              Go to Board
-                          </a>
-                      </td>
-                  </tr>
               </tbody>
           </table>
         </div>
@@ -240,7 +177,7 @@
 <script src="./dist/js/adminlte.min.js"></script>
 <script>
   // Define the API endpoint URL
-  const apiUrl = 'https://picassol-d0bba630b8ff.herokuapp.com/project'; // Replace with your API URL
+  const apiUrl = 'https://picassol-d0bba630b8ff.herokuapp.com/project/getByOwnerAddress/91d4z5F3hFatUuj3Ae8sRa8Fsi17e9NSsNLXvSXzuSPq'; // Replace with your API URL
 
   // Use jQuery to make an AJAX request to the API
   $.ajax({
@@ -266,14 +203,25 @@
         // Append data to the row's cells (adjust this based on your data structure)
         row.append($('<td>').text(item._id));
         row.append($('<td>').text(item.title));
-        row.append($('<td>').text(item.__v));
+        row.append($('<td>').text(item.projectOwnerAddress));
+        row.append($('<td>').text(item.createdAt));
+        row.append($('<td>').text(item.status));
+        row.append($('<td class="project-actions text-center">').html('<a class="btn btn-primary btn-sm" href="kanban.html">Go to Board</a>'));
+
         // Add more cells as needed for additional columns
 
         // Append the row to the table
         tbody.append(row);
       });
     } else {
-      console.error('API did not return an array.');
+      // Create a new row
+      const table = document.getElementById("data-table");
+      const warningRow = table.insertRow();
+
+      // Create a cell for the warning message
+      const warningCell = warningRow.insertCell(0);
+      warningCell.colSpan = 3; // Adjust the colspan based on the number of columns in your table
+      warningCell.textContent = "No data available"; // Add your warning message here
     }
   },
     error: function (error) {
