@@ -29,7 +29,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="projects.html" class="brand-link">
+    <a href="dashboard.html" class="brand-link">
       <img src="./dist/img/logo.png" alt="" class="brand-image img-circle elevation-3" style="opacity: .8">
     </a>
 
@@ -118,26 +118,35 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="inputName">Task Name</label>
-                <input type="text" id="inputName" class="form-control">
+                <input type="text" id="inputName" name="name" class="form-control">
               </div>
               <div class="form-group">
                 <label for="inputDescription">Task Description</label>
-                <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                <textarea id="inputDescription" class="form-control" name="description" rows="4"></textarea>
               </div>
               <div class="form-group">
-                <label for="inputStatus">Multiplier</label>
-                <select id="inputStatus" class="form-control custom-select">
-                  <option>2X</option>
-                  <option>5X</option>
-                  <option>10X</option>
+                <label for="inputName">Multiplier</label>
+                <input type="text" id="inputName" name="multiplier" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="inputStatus">Estimation</label>
+                <select id="inputStatus" name="estimation" class="form-control custom-select">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="inputStatus">Project</label>
-                <select id="inputStatus" class="form-control custom-select">
-                  <option>Project 1</option>
-                  <option>Project 2</option>
-                  <option>Project 3</option>
+                <select id="inputStatus" name="projectId" class="form-control custom-select">
+                  <option value="64fd8cc5a935d7f646a57311">Heroku</option>
+                  <option value="64fd8f94a935d7f646a57326">Project RoboGenesis</option>
+                  <option value="64fd8fa8a935d7f646a57328">Operation CryptoGuard</option>
                 </select>
               </div>
             </div>
@@ -148,7 +157,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <input type="submit" value="Create new Task" class="btn btn-success float-right">
+          <input type="submit" value="Create new Task" id="submitButton" class="btn btn-success float-right">
         </div>
       </div>
     </section>
@@ -171,5 +180,44 @@
 <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+
+    $('#submitButton').click(function(){
+
+      var txtName = document.getElementsByName('name')[0].value;
+      var txtDescription = document.getElementsByName('description')[0].value;
+      var txtMultiplier = document.getElementsByName('multiplier')[0].value;
+      var txtEstimation = document.getElementsByName('estimation')[0].value;
+      var txtProjectId = document.getElementsByName('projectId')[0].value;
+
+      var settings = {
+        "url": "https://picassol-d0bba630b8ff.herokuapp.com/task",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({
+          "projectId": txtProjectId,
+          "title": txtName,
+          "description": txtDescription,
+          "estimation": txtEstimation,
+          "multiplier": txtMultiplier,
+          "status": "Todo"
+        }),
+      };
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+        alert("SUCCESS!")
+      });
+
+    });
+    
+  });
+</script>
+
 </body>
 </html>
