@@ -199,14 +199,15 @@
       data.forEach(function (item) {
         // Create a new row for each item
         const row = $('<tr>');
-
+        var projectId = item._id;
+        var href = 'kanban.html?projectId=' + encodeURIComponent(projectId);
         // Append data to the row's cells (adjust this based on your data structure)
         row.append($('<td>').text(item._id));
         row.append($('<td>').text(item.title));
         row.append($('<td>').text(item.projectOwnerAddress));
         row.append($('<td>').text(item.createdAt));
         row.append($('<td>').text(item.status));
-        row.append($('<td class="project-actions text-center">').html('<a class="btn btn-primary btn-sm" href="kanban.html">Go to Board</a>'));
+        row.append($('<td class="project-actions text-center">').html('<a class="btn btn-primary btn-sm" href="' + href + '">Go to Board</a>'));
 
         // Add more cells as needed for additional columns
 
