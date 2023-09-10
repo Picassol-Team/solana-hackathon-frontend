@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Pace</title>
+  <title>Picassol | Home</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -97,7 +97,6 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Pace</li>
             </ol>
           </div>
         </div>
@@ -166,7 +165,7 @@
 
 window.addEventListener("load", (event) => {
   const getProvider = () => {
-  
+
   if ('phantom' in window) {
           console.log("phantom in");
 
@@ -190,7 +189,7 @@ const provider = getProvider(); // see "Detecting the Provider"
 try {
   const resp =  provider.connect();
     console.log(resp.publicKey.toString());
-    // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo 
+    // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo
 } catch (err) {
     // { code: 4001, message: 'User rejected the request.' }
 }})
@@ -199,7 +198,7 @@ function getAccount()
 {
 window.solana.connect();
 window.solana.request({ method: "connect" })
-  
+
 window.solana.isConnected
 window.solana.autoApproved
 

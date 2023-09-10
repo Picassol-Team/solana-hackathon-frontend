@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Picassol | Project A</title>
+  <title>Picassol | My Projects</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -124,7 +124,7 @@
           </div>
         </div>
         <div class="card-body p-0">
-          <table class="table table-striped projects">
+          <table id="data-table" class="table table-striped projects">
               <thead>
                   <tr>
                       <th style="width: 1%">
@@ -175,9 +175,7 @@
                       </td>
                       <td class="project-actions text-center">
                           <a class="btn btn-primary btn-sm" href="#">
-                              <i class="fas fa-folder">
-                              </i>
-                              Kanban
+                              Go to Board
                           </a>
                       </td>
                   </tr>
@@ -209,9 +207,7 @@
                       </td>
                       <td class="project-actions text-center">
                           <a class="btn btn-primary btn-sm" href="#">
-                              <i class="fas fa-folder">
-                              </i>
-                              Kanban
+                              Go to Board
                           </a>
                       </td>
                   </tr>
@@ -242,7 +238,48 @@
 <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes
-<script src="./dist/js/demo.js"></script>-->
+<script>
+  // Define the API endpoint URL
+  const apiUrl = 'https://picassol-d0bba630b8ff.herokuapp.com/project'; // Replace with your API URL
+
+  // Use jQuery to make an AJAX request to the API
+  $.ajax({
+    url: apiUrl,
+    method: 'GET',
+    headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    dataType: 'json', // Specify the expected data type (JSON in this case)
+    success: function (data) {
+    if (Array.isArray(data)) {
+      // Get a reference to the table's <tbody> element
+      const tbody = $('#data-table tbody');
+
+      // Clear any existing rows in the table
+      tbody.empty();
+
+      // Loop through the array and append data to the table
+      data.forEach(function (item) {
+        // Create a new row for each item
+        const row = $('<tr>');
+
+        // Append data to the row's cells (adjust this based on your data structure)
+        row.append($('<td>').text(item._id));
+        row.append($('<td>').text(item.title));
+        row.append($('<td>').text(item.__v));
+        // Add more cells as needed for additional columns
+
+        // Append the row to the table
+        tbody.append(row);
+      });
+    } else {
+      console.error('API did not return an array.');
+    }
+  },
+    error: function (error) {
+      console.error('Error fetching data from the API:', error);
+    },
+  });
+</script>
 </body>
 </html>
