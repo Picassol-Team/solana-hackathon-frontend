@@ -87,6 +87,8 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+      <button onclick="getAccount()">Get  Account</button><button onclick="disconnectAccount()">Log Out</button>
+      Account:<span id="user-account"></span>
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
@@ -144,6 +146,7 @@
 </div>
 <!-- ./wrapper -->
 
+
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -151,7 +154,63 @@
   <!-- pace-progress -->
 <script src="./plugins/pace-progress/pace.min.js"></script>
 <!-- AdminLTE App -->
+
 <script src="./dist/js/adminlte.min.js"></script>
+
+
+<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 <!-- AdminLTE for demo purposes -->
+
+<script>
+
+
+window.addEventListener("load", (event) => {
+  const getProvider = () => {
+  
+  if ('phantom' in window) {
+          console.log("phantom in");
+
+    const provider = window.phantom?.solana;
+
+    if (provider?.isPhantom) {
+                console.log(provider?.isPhantom);
+
+      return provider;
+    }
+  }
+      console.log("error");
+
+  //window.open('https://phantom.app/', '_blank');
+};
+      console.log("getted");
+
+const provider = getProvider(); // see "Detecting the Provider"
+      console.log(provider);
+
+try {
+  const resp =  provider.connect();
+    console.log(resp.publicKey.toString());
+    // 26qv4GCcx98RihuK3c4T6ozB3J7L6VwCuFVc7Ta2A3Uo 
+} catch (err) {
+    // { code: 4001, message: 'User rejected the request.' }
+}})
+
+function getAccount()
+{
+window.solana.connect();
+window.solana.request({ method: "connect" })
+  
+window.solana.isConnected
+window.solana.autoApproved
+
+  document.getElementById("user-account").innerHTML = window.solana.publicKey;
+}
+
+function disconnectAccount()
+{
+  window.solana.disconnect();
+  window.solana.on('disconnect', () => console.log("disconnected!"))
+}
+</script>
 </body>
 </html>
